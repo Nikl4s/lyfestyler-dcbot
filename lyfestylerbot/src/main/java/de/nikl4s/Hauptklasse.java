@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class Hauptklasse {
     public static void main(String[] args) {
-        String token = "MTQxOTU0MDU2MDc1ODMxMzA4NA.GMwlR7.yiryFkL8mrO9jg0d1aSmHVpyrnnd4kJhteHBh0";
+        String token = "Your Toke Here";
         JDABuilder confyg = JDABuilder.createDefault(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS);
         
         confyg.setStatus(OnlineStatus.ONLINE);
