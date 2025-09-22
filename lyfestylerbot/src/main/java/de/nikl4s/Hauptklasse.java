@@ -1,5 +1,7 @@
 package de.nikl4s;
 
+import java.util.Scanner;
+
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -8,7 +10,11 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class Hauptklasse {
     public static void main(String[] args) {
-        String token = "Your Toke Here";
+        
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Gebe deinen Discord-App-Token ein: ");
+        String token = scan.next();
+
         JDABuilder confyg = JDABuilder.createDefault(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS);
         
         confyg.setStatus(OnlineStatus.ONLINE);
