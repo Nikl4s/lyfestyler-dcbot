@@ -1,0 +1,18 @@
+{
+    "maven.excludedFolders": [
+
+        "**/.*",
+        "**/node_modules",
+        "**/target",
+        "**/bin",
+        "**/archetype-resources"
+    ],
+    "maven.pomfile.autoUpdateEffectivePOM": true,
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-17",
+            "path": "/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"
+        }
+    ]
+}
