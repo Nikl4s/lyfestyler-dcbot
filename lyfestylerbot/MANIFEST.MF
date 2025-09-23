@@ -1,3 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: target.classes.de.nikl4s.Hauptklasse.class 
-
+Main-Class: de.nikl4s.Hauptklasse
