@@ -45,7 +45,7 @@ public class mainClass {
         Activity currentActivity = lyfeBot.getPresence().getActivity();
         String activityText = currentActivity == null ? "Keine" : (currentActivity.getType() + ": " + currentActivity.getName());
         System.out.println("Aktivität: " + activityText);
-        System.out.println("\\033[0m");
+        System.out.println("\033[0m");
 
 
     }
