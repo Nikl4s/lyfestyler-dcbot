@@ -9,9 +9,16 @@ public class UserStats {
     private final String userId;
     private String displayName;
     private int points;
+    private int yearPoints;
     private int currentStreak;
     private int bestStreak;
+    private int bestMonthlyPoints;
+    private int bestYearlyPoints;
     private LocalDate lastGymDate;
+    // WakeUp: Frühster Vogel Streak
+    private int wakeFirstCurrentStreak;
+    private int wakeFirstBestStreak;
+    private LocalDate lastWakeFirstDate;
 
     /**
      * Legt einen neuen Nutzer-Datensatz an.
@@ -22,9 +29,15 @@ public class UserStats {
         this.userId = userId;
         this.displayName = displayName;
         this.points = 0;
+        this.yearPoints = 0;
         this.currentStreak = 0;
         this.bestStreak = 0;
+        this.bestMonthlyPoints = 0;
+        this.bestYearlyPoints = 0;
         this.lastGymDate = null;
+        this.wakeFirstCurrentStreak = 0;
+        this.wakeFirstBestStreak = 0;
+        this.lastWakeFirstDate = null;
     }
 
     public String getUserId() {
@@ -43,6 +56,10 @@ public class UserStats {
         return points;
     }
 
+    public int getYearPoints() {
+        return yearPoints;
+    }
+
     public int getCurrentStreak() {
         return currentStreak;
     }
@@ -51,8 +68,41 @@ public class UserStats {
         return bestStreak;
     }
 
+    public int getBestMonthlyPoints() {
+        return bestMonthlyPoints;
+    }
+
+    public int getBestYearlyPoints() {
+        return bestYearlyPoints;
+    }
+
     public LocalDate getLastGymDate() {
         return lastGymDate;
+    }
+
+    public int getWakeFirstCurrentStreak() {
+        return wakeFirstCurrentStreak;
+    }
+
+    public int getWakeFirstBestStreak() {
+        return wakeFirstBestStreak;
+    }
+
+    /**
+     * Setzt den aktuellen Streak direkt auf einen Wert und aktualisiert ggf. den Best-Streak.
+     * Negativwerte werden als 0 behandelt.
+     * @param newStreak gewünschter Streak-Wert
+     * @return der tatsächlich gesetzte aktuelle Streak
+     */
+    public int setStreak(int newStreak) {
+        if (newStreak < 0) {
+            newStreak = 0;
+        }
+        this.currentStreak = newStreak;
+        if (this.currentStreak > this.bestStreak) {
+            this.bestStreak = this.currentStreak;
+        }
+        return this.currentStreak;
     }
 
     /**
@@ -90,6 +140,59 @@ public class UserStats {
         points = 0;
         currentStreak = 0;
         lastGymDate = null;
+    }
+
+    /**
+     * Erhöht die Jahrespunkte um den angegebenen Betrag.
+     */
+    public void addYearPoints(int delta) {
+        this.yearPoints += delta;
+        if (this.yearPoints < 0) {
+            this.yearPoints = 0;
+        }
+    }
+
+    /**
+     * Aktualisiert Monats-Highscore auf Basis der aktuellen Monats-Punkte.
+     */
+    public void finalizeMonthHighscore() {
+        if (this.points > this.bestMonthlyPoints) {
+            this.bestMonthlyPoints = this.points;
+        }
+    }
+
+    /**
+     * Aktualisiert Jahres-Highscore auf Basis der aktuellen Jahres-Punkte.
+     */
+    public void finalizeYearHighscore() {
+        if (this.yearPoints > this.bestYearlyPoints) {
+            this.bestYearlyPoints = this.yearPoints;
+        }
+    }
+
+    /**
+     * Setzt Jahreswerte für neues Jahr zurück.
+     */
+    public void resetForNewYear() {
+        this.yearPoints = 0;
+    }
+
+    /**
+     * Markiert den Nutzer als "Frühster Vogel" für das angegebene Datum und pflegt Wake-First-Streak.
+     */
+    public void recordWakeFirst(LocalDate date) {
+        boolean consecutive = lastWakeFirstDate != null && lastWakeFirstDate.plusDays(1).isEqual(date);
+        if (lastWakeFirstDate == null || !lastWakeFirstDate.isEqual(date)) {
+            if (consecutive) {
+                wakeFirstCurrentStreak += 1;
+            } else {
+                wakeFirstCurrentStreak = 1;
+            }
+            if (wakeFirstCurrentStreak > wakeFirstBestStreak) {
+                wakeFirstBestStreak = wakeFirstCurrentStreak;
+            }
+            lastWakeFirstDate = date;
+        }
     }
 
     /**
